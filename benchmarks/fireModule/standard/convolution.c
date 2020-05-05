@@ -3,90 +3,101 @@
 
 #define N 10
 #define M 10
-#define K 3
+#define L 2
 
-void conv1D(int a[N][M], int c[N][M]);
-void conv2D(int a[N][M], int kernel[K][K], int c[N][M]);
-void printMatrices(int a[N][M], int c[N][M]);
+#define K 3
+#define KERNEL1 1
+
+// for 1x1 Kernels
+void conv1(int a[N][M][L], int c[N][M][L]);
+// for KxK Kernels
+void convK(int a[N][M][L], int kernel2D[K][K], int c[N][M][L]);
+// Prints a Matrix
+void printMatrix(int a[N][M][L], char output[]);
 
 int main(int argc, char** argv){
-        int i, j, l, h;
+        int i, j, k, l, h;
 
-        // clock_t t;
+        int a[N][M][L];
 
-        int a[N][M];
+        int kernel2D [K][K];
 
-        int kernel [K][K];
-
-        int c[N][M];
+        int result1[N][M][L];
+        int resultK[N][M][L];
 
         // Setup Matrices
-
         for (i = 0; i < N; i++){
           for (j = 0; j < M; j++){
-            a[i][j] = rand()%1024;
-            c[i][j] = 0;
+            for(k = 0; k < L; k++){
+              a[i][j][k] = rand()%1024;
+              result1[i][j][k] = 0;
+              resultK[i][j][k] = 0;
+            }
           }
         }
 
         // Setup Kernel
-
         for (i = 0; i < K; i++){
           for (j = 0; j< K; j++){
-            kernel[i][j] = 0;
+            kernel2D[i][j] = 0;
           }
         }
 
-        // kernel[0][0] = 1;
-        kernel[K/2][K/2] = 1;
-        // t = clock() - t;
-        conv2D(a, kernel, c);
+        // Set an identity kernel
+        kernel2D[K/2][K/2] = 1;
 
-        printMatrices(a,c);
+        convK(a, kernel2D, resultK);
+        conv1(a,result1);
+        // Print the matrices
+        printMatrix(a, "Initial Matrix");
+        printMatrix(result1, "1x1 Result Matrix");
+        printMatrix(resultK, "KxK Result Matrix");
 
         return 0;
 }
 
-void conv1D(int a[N][M], int c[N][M]){
-
+// For 1 x 1 Convolutions
+void conv1(int a[N][M][L], int c[N][M][L]){
+  int i, j, k;
+  for(int k = 0; k < L; k++){
+    for (i = 0; i < N; i++){
+      for (j = 0; j < M; j++){
+        c[i][j][k] = a[i][j][k]*KERNEL1;
+      }
+    }
+  }
 }
 
-void conv2D(int a[N][M], int kernel[K][K], int c[N][M]){
-  int i, j, l, h;
-  for (i = 0; i < N; i++){
-    for (j = 0; j < M; j++){
+// For K x K Convolutions
+void convK(int a[N][M][L], int kernel2D[K][K], int c[N][M][L]){
+  int i, j, k, l, h;
+  for(k = 0; k < L; k++){
+    for (i = 0; i < N; i++){
+      for (j = 0; j < M; j++){
+        if(!(i-K/2<0 || j-K/2<0 || i+K/2>=N || j+K/2 >= M)){
+          for (l = -K/2; l < K/2; l++){
+            for(h = -K/2; h < K/2; h++){
+              c[i][j][k] += a[i+l][j+h][k]*kernel2D[l+K/2][h+K/2];
+            }
+          }
+        }
+      }
+    }
+  }
+}
 
-      c[i][j] = 0;
+// Prints a 3D Matrix
+void printMatrix(int a[N][M][L], char output[]){
+  int i,j,k;
 
-      if(!(i-K/2<0 || j-K/2<0 || i+K/2>=N || j+K/2 >= M)){
-        for (l = -K/2; l < K/2; l++){
-          for(h = -K/2; h < K/2; h++){
-             c[i][j] += a[i+l][j+h]*kernel[l+K/2][h+K/2];
-           }
-         }
-       }
-     }
-   }
- }
-
-void printMatrices(int a[N][M], int c[N][M]){
-  int i,j;
-
-  for (i = 0; i < N; i++) {
-    for (j = 0; j < M; j++) {
-      printf("%d\t", a[i][j]);
+  for(k = 0; k < L; k++){
+    printf("%s %d \n", output, k);
+    for (i = 0; i < N; i++) {
+      for (j = 0; j < M; j++) {
+        printf("%d\t", a[i][j][k]);
+      }
+      printf("\n");
     }
     printf("\n");
   }
-
-  printf("\n");
-
-  for (i = 0; i < N; i++) {
-    for (j = 0; j < M; j++) {
-      printf("%d\t", c[i][j]);
-    }
-    printf("\n");
-  }
-
-  printf("\n");
 }
