@@ -23,5 +23,5 @@
 // Specify the scratchpad addresses for variables
 #define SPM			0x2f100000
 #define M1ADDR		SPM + (mat_size * 0)
-#define M2ADDR		SPM + (mat_size * 1)
-#define M3ADDR		SPM + (mat_size * 2)
+#define M3ADDR		SPM + (mat_size * 1)
+#define KADDR		SPM + (k_size * 2)

@@ -6,6 +6,7 @@
 #define TYPE int
 #define ROW 55
 #define COL 55
+#define DEP 1
 
 #define K 3
 

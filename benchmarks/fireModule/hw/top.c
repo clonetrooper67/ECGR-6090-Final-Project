@@ -1,7 +1,7 @@
 #include "hw_defines.h"
 
 void top(uint64_t m1_addr,
-		 uint64_t m2_addr,
+		 uint64_t k_addr,
 		 uint64_t m3_addr) {
 
 	//Define Device MMRs
@@ -20,9 +20,9 @@ void top(uint64_t m1_addr,
 	//Poll DMA for finish
 	while ((*DmaFlags & DEV_INTR) != DEV_INTR);
 	//Transfer M2
-	*DmaRdAddr  = m2_addr;
-	*DmaWrAddr  = M2ADDR;
-	*DmaCopyLen = mat_size;
+	*DmaRdAddr  = k_addr;
+	*DmaWrAddr  = KADDR;
+	*DmaCopyLen = k_size;
 	*DmaFlags   = DEV_INIT;
 	//Poll DMA for finish
 	while ((*DmaFlags & DEV_INTR) != DEV_INTR);

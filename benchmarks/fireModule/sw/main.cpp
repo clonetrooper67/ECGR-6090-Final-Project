@@ -13,10 +13,10 @@ volatile uint32_t * val_c = (uint32_t *)0x2f000011;
 
 int main(void) {
 	m5_reset_stats();
-    uint32_t base = 0x80c00000;
+  uint32_t base = 0x80c00000;
 	TYPE *m1 = (TYPE *)base;
-	TYPE *m2 = (TYPE *)(base+8*ROW*COL);
-	TYPE *m3 = (TYPE *)(base+16*ROW*COL);
+	TYPE *m3 = (TYPE *)(base+8*ROW*COL);
+	TYPE *kernel = (TYPE *)(base+16*K*K);
 	TYPE *check = (TYPE *)(base+24*ROW*COL);
 	int row_size = ROW;
   int col_size = COL;
@@ -25,7 +25,7 @@ int main(void) {
 	stage = 0;
 
     ges.a = m1;
-    ges.b = m2;
+    ges.b = kernel;
     ges.c = m3;
     ges.row_size = row_size;
     ges.col_size = col_size;
@@ -36,7 +36,7 @@ int main(void) {
     printf("Data generated\n");
 
     *val_a = (uint32_t)(void *)m1;
-    *val_b = (uint32_t)(void *)m2;
+    *val_b = (uint32_t)(void *)kernel;
     *val_c = (uint32_t)(void *)m3;
     // printf("%d\n", *top);
     *top = 0x01;
@@ -56,7 +56,7 @@ int main(void) {
             sum = 0;
             for(k=0;k<ROW;k++) {
                 k_col = k * COL;
-                mult = m1[i_col + k] * m2[k_col + j];
+                mult = m1[i_col + k] * kernel[k_col + j];
                 sum += mult;
             }
             check[i_col + j] = sum;
