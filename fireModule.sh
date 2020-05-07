@@ -48,6 +48,7 @@ SYS_OPTS="--mem-size=4GB \
           --dtb-file=none --bare-metal \
           --cpu-type=DerivO3CPU"
 CACHE_OPTS="--caches --l2cache"
+# CACHE_OPTS="--caches "
 
 OUTDIR=BM_ARM_OUT/$BENCH
 

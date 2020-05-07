@@ -1,9 +1,12 @@
 #ifndef __DEFINES_H__
 #define __DEFINES_H__
 
-#define CHECK
+// #define CHECK
 
-#define TYPE double
-#define LEN 64
+#define TYPE int
+#define ROW 55
+#define COL 55
+
+#define K 3
 
 #endif
