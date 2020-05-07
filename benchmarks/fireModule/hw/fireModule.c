@@ -1,9 +1,9 @@
 #include "hw_defines.h"
 
 void fireModule(){
-    uint8_t * m1base = (uint8_t *)M1ADDR;
+    uint8_t * m1base = (uint8_t *)IADDR;
     uint8_t * kbase = (uint8_t *)KADDR;
-    uint8_t * m3base = (uint8_t *)M3ADDR;
+    uint8_t * m3base = (uint8_t *)RADDR;
     TYPE    * input     = (TYPE    *)m1base;
     TYPE    * kernel     = (TYPE    *)kbase;
     TYPE    * result     = (TYPE    *)m3base;

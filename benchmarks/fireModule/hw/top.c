@@ -1,8 +1,8 @@
 #include "hw_defines.h"
 
-void top(uint64_t m1_addr,
+void top(uint64_t i_addr,
 		 uint64_t k_addr,
-		 uint64_t m3_addr) {
+		 uint64_t r_addr) {
 
 	//Define Device MMRs
 	volatile uint8_t  * GEMMFlags  = (uint8_t *)GEMM;
@@ -13,8 +13,8 @@ void top(uint64_t m1_addr,
 
 	//Transfer Input Matrices
 	//Transfer M1
-	*DmaRdAddr  = m1_addr;
-	*DmaWrAddr  = M1ADDR;
+	*DmaRdAddr  = i_addr;
+	*DmaWrAddr  = IADDR;
 	*DmaCopyLen = mat_size;
 	*DmaFlags   = DEV_INIT;
 	//Poll DMA for finish
@@ -33,8 +33,8 @@ void top(uint64_t m1_addr,
 	while ((*GEMMFlags & DEV_INTR) != DEV_INTR);
 
 	//Transfer M3
-	*DmaRdAddr  = M3ADDR;
-	*DmaWrAddr  = m3_addr;
+	*DmaRdAddr  = RADDR;
+	*DmaWrAddr  = r_addr;
 	*DmaCopyLen = mat_size;
 	*DmaFlags   = DEV_INIT;
 	//Poll DMA for finish
