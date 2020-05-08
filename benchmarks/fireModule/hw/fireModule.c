@@ -9,23 +9,24 @@ void fireModule(){
   TYPE    * result     = (TYPE    * )m3base;
 
   TYPE sum;
+  int s = 0;
 
     // #pragma clang loop unroll(full)
   for(int k = 0; k < dep_size; k++){
-    for(int i = 0;i < row_size;i+=STR) {
+    for(int i = 0;i < row_size;i+=STRIDE) {
         // #pragma clang loop unroll(full)
         // #pragma clang loop unroll_count(4)
-      for(int j = 0;j < col_size; j+=STR) {
-        if(!(i-K/2<0 || j-K/2<0 || i+K/2>=ROW || j+K/2 >= COL)){
-          sum = 0;
-          for(int l = -K/2; l < K/2; l++){
-            for(int h = -K/2; h < K/2; h++){
-              // sum += input[INDX3D(i+l, j+h, k)] * kernel[KINDX2D(l+K/2, h+K/2)];
-              sum += input[INDX3D(i, j, k)] * kernel[KINDX2D(i, j)];
-
+      for(int j = 0;j < col_size; j+=STRIDE) {
+        if(!(i-KSIZE/2<0 || j-KSIZE/2<0 || i+KSIZE/2>=IROW || j+KSIZE/2 >= ICOL)){
+          for(int w = 0; w < KDEPTH; w++){
+            sum = 0;
+            for(int l = -KSIZE/2; l < KSIZE/2; l++){
+              for(int h = -KSIZE/2; h < KSIZE/2; h++){
+                sum += input[INDX3D(i+l, j+h, k)] * kernel[KINDX3D(l+KSIZE/2, h+KSIZE/2, w)];
+              }
             }
+            result[STRIDEINDX3D(i, j, w)] = sum;
           }
-          result[INDX3D(i, j, k)] = sum;
         }
       }
     }

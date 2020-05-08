@@ -30,7 +30,6 @@ def makeHWAcc(options, system):
     system.convAcc.top = CommInterface(devicename=acc, gic=gic)
     AccConfig(system.convAcc.top, config, ir)
     system.convAcc._connect_hwacc(system.convAcc.top)
-
     # system.convAcc.bench.enable_debug_msgs = True
 
     # if acc == "fft":
@@ -49,6 +48,7 @@ def makeHWAcc(options, system):
     #     max_req_size = 4
     #     buffer_size = 32
     # else:
+
     max_req_size = 4
     buffer_size = 32
 
@@ -68,10 +68,6 @@ def makeHWAcc(options, system):
     # system.convAcc.stream_dma.rd_int = 210
     # system.convAcc.stream_dma.wr_int = 211
     # system.convAcc._connect_dma(system, system.convAcc.stream_dma)
-    # system.convAcc.stream_dma.dma = system.convAcc.coherency_bus.slave
-    # system.convAcc.stream_dma.pio = system.convAcc.top.local
-
-    # system._connect_dma(system, system.convAcc.stream_dma)
 
     # Add the benchmark function
     acc = options.accbench
@@ -83,9 +79,9 @@ def makeHWAcc(options, system):
 
     # Add the Scratchpad Memory for Kernel
     # spmRange = AddrRange(addr, addr+(80*2*24))
-    system.convAcc.spm = ScratchpadMemory()#range=spmRange)
-    AccSPMConfig(system.convAcc.bench, system.convAcc.spm, config)
-    system.convAcc._connect_spm(system.convAcc.spm)
+    system.convAcc.weights = ScratchpadMemory()#range=spmRange)
+    AccSPMConfig(system.convAcc.bench, system.convAcc.weights, config)
+    system.convAcc._connect_spm(system.convAcc.weights)
 
     # Add the Output Buffer
     # addr = local_low + 0x18E5
