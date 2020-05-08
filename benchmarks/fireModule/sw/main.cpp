@@ -16,8 +16,9 @@ int main(void) {
   uint32_t base = 0x80c00000;
 	TYPE *m1 = (TYPE *)base;
 	TYPE *m3 = (TYPE *)(base+8*ROW*COL);
-	TYPE *kernel = (TYPE *)(base+16*K*K);
-	TYPE *check = (TYPE *)(base+24*ROW*COL);
+	TYPE *check = (TYPE *)(base+16*ROW*COL);
+	TYPE *kernel = (TYPE *)(base+24*K*K);
+
 	int row_size = ROW;
   int col_size = COL;
 	int k_size = K;

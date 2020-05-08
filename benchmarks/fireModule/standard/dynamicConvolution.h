@@ -10,8 +10,10 @@
 #define K 3
 #define KERNEL1 1
 
-#define INDX3D(i,j,k) (N*M*i + M*j + k)
-#define INDX2D(i,j) (N*i + j)
+#define INDX3D(i,j,k) (N*M*(k) + M*(j) + i)
+
+#define INDX2D(i,j) (K*(i) + j)
+
 // for 1x1 Kernels
 void conv1(int *a, int *c);
 // for KxK Kernels

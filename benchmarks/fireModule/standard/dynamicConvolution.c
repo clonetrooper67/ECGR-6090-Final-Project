@@ -13,12 +13,12 @@ int main(int argc, char** argv){
         for (i = 0; i < N; i++){
           for (j = 0; j < M; j++){
             for(k = 0; k < L; k++){
-              a[INDX3D(i,j,k)] = i*j*k + 12;
-              result1[INDX3D(i,j,k)] = 1;
-              resultK[INDX3D(i,j,k)] = 1;
-              printf("%d\t", a[INDX3D(i,j,k)]);
-              printf("%d\t", result1[INDX3D(i,j,k)]);
-              printf("%d\t", resultK[INDX3D(i,j,k)]);
+              a[INDX3D(i,j,k)] = 1;
+              result1[INDX3D(i,j,k)] = 0;
+              resultK[INDX3D(i,j,k)] = 0;
+              // printf("%d\t", a[INDX3D(i,j,k)]);
+              // printf("%d\t", result1[INDX3D(i,j,k)]);
+              // printf("%d\t", resultK[INDX3D(i,j,k)]);
             }
           }
         }
@@ -74,7 +74,7 @@ void convK(int *a, int *kernel2D, int *c){
 }
 
 // Prints a 3D Matrix
-void printMatrix(int a[SIZE], char output[]){
+void printMatrix(int *a, char output[]){
   int i,j,k;
 
   for(k = 0; k < L; k++){

@@ -3,11 +3,16 @@
 
 // #define CHECK
 
-#define TYPE int
-#define ROW 55
-#define COL 55
-#define DEP 1
+#define TYPE uint8_t
+#define ROW 111
+#define COL 111
+#define DEP 2
 
 #define K 3
+
+// Pointer Math Suckz
+#define INDX3D(i,j,k) (ROW*COL*(k) + COL*(j) + i)
+#define INDX2D(i,j) (i + COL*(j))
+#define KINDX2D(i,j) (K*(i) + j)
 
 #endif

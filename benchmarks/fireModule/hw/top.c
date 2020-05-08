@@ -5,7 +5,7 @@ void top(uint64_t i_addr,
 		 uint64_t r_addr) {
 
 	//Define Device MMRs
-	volatile uint8_t  * GEMMFlags  = (uint8_t *)GEMM;
+	volatile uint8_t  * CONVFlags  = (uint8_t *)CONV;
 	volatile uint8_t  * DmaFlags   = (uint8_t  *)(DMA);
 	volatile uint64_t * DmaRdAddr  = (uint64_t *)(DMA+1);
 	volatile uint64_t * DmaWrAddr  = (uint64_t *)(DMA+9);
@@ -28,9 +28,9 @@ void top(uint64_t i_addr,
 	while ((*DmaFlags & DEV_INTR) != DEV_INTR);
 
 	//Start the accelerated function
-	*GEMMFlags = DEV_INIT;
+	*CONVFlags = DEV_INIT;
 	//Poll function for finish
-	while ((*GEMMFlags & DEV_INTR) != DEV_INTR);
+	while ((*CONVFlags & DEV_INTR) != DEV_INTR);
 
 	//Transfer M3
 	*DmaRdAddr  = RADDR;
