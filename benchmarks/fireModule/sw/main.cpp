@@ -15,8 +15,8 @@ int main(void) {
 	m5_reset_stats();
   uint32_t base = 0x80c00000;
 	TYPE *m1 = (TYPE *)base;
-	TYPE *m3 = (TYPE *)(base+8*ROW*COL);
-	TYPE *check = (TYPE *)(base+16*ROW*COL);
+	TYPE *m3 = (TYPE *)(base+8*ROW*COL*DEP);
+	TYPE *check = (TYPE *)(base+16*ROW*COL*DEP);
 	TYPE *kernel = (TYPE *)(base+24*K*K);
 
 	int row_size = ROW;

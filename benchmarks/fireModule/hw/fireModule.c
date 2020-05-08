@@ -12,10 +12,10 @@ void fireModule(){
 
     // #pragma clang loop unroll(full)
   for(int k = 0; k < dep_size; k++){
-    for(int i = 0;i < row_size;i++) {
+    for(int i = 0;i < row_size;i+=STR) {
         // #pragma clang loop unroll(full)
         // #pragma clang loop unroll_count(4)
-      for(int j = 0;j < col_size; j++) {
+      for(int j = 0;j < col_size; j+=STR) {
         if(!(i-K/2<0 || j-K/2<0 || i+K/2>=ROW || j+K/2 >= COL)){
           sum = 0;
           for(int l = -K/2; l < K/2; l++){
