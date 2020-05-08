@@ -11,13 +11,15 @@ void fireModule(){
   TYPE sum;
   int s = 0;
 
-    // #pragma clang loop unroll(full)
+    
   for(int k = 0; k < dep_size; k++){
+    // #pragma clang loop unroll(full)
     for(int i = 0;i < row_size;i+=STRIDE) {
         // #pragma clang loop unroll(full)
         // #pragma clang loop unroll_count(4)
       for(int j = 0;j < col_size; j+=STRIDE) {
         if(!(i-KSIZE/2<0 || j-KSIZE/2<0 || i+KSIZE/2>=IROW || j+KSIZE/2 >= ICOL)){
+          // #pragma clang loop unroll(full)
           for(int w = 0; w < KDEPTH; w++){
             sum = 0;
             for(int l = -KSIZE/2; l < KSIZE/2; l++){
@@ -25,7 +27,7 @@ void fireModule(){
                 sum += input[INDX3D(i+l, j+h, k)] * kernel[KINDX3D(l+KSIZE/2, h+KSIZE/2, w)];
               }
             }
-            result[STRIDEINDX3D(i, j, w)] = sum;
+            result[STRIDEINDX3D(i, j, k*KSIZE+w)] = sum;
           }
         }
       }

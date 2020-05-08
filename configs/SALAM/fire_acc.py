@@ -30,7 +30,7 @@ def makeHWAcc(options, system):
     system.convAcc.top = CommInterface(devicename=acc, gic=gic)
     AccConfig(system.convAcc.top, config, ir)
     system.convAcc._connect_hwacc(system.convAcc.top)
-    # system.convAcc.bench.enable_debug_msgs = True
+
 
     # if acc == "fft":
     #     max_req_size = 8
@@ -76,6 +76,7 @@ def makeHWAcc(options, system):
     system.convAcc.bench = CommInterface(devicename=acc, gic=gic, reset_spm=False)
     AccConfig(system.convAcc.bench, config, ir)
     system.convAcc.bench.pio = system.convAcc.top.local
+    # system.convAcc.bench.enable_debug_msgs = True
 
     # Add the Scratchpad Memory for Kernel
     # spmRange = AddrRange(addr, addr+(80*2*24))
@@ -87,3 +88,5 @@ def makeHWAcc(options, system):
     # addr = local_low + 0x18E5
     # clstr.DWConvOut = StreamBuffer(stream_address=addr, stream_size=1, buffer_size=8)
     # clstr.DWConv.stream = clstr.DWConvOut.stream_in
+
+     # system.convAcc.bench.enable_debug_msgs = True   

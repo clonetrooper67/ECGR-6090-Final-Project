@@ -7,12 +7,12 @@
 #define TYPE uint8_t
 #define IROW 55
 #define ICOL 55
-#define IDEP 1
+#define IDEP 3
 
 // Filter Dimensions
 #define KSIZE 3
-#define KDEPTH 1
-#define STRIDE 1
+#define KDEPTH 96
+#define STRIDE 2
 
 // Output Fmap Dimensions
 #define OROW IROW/STRIDE
